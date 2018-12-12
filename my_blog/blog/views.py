@@ -1,4 +1,4 @@
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 from .forms import PostModelForm
 from .models import Post
@@ -32,6 +32,13 @@ class PostUpdateView(UpdateView):
     def form_valid(self, form):
         form.instance.created_by = self.request.user
         return super(PostUpdateView, self).form_valid(form)
+
+    def get_success_url(self):
+        return '/blog'
+
+
+class PostDeleteView(DeleteView):
+    model = Post
 
     def get_success_url(self):
         return '/blog'
