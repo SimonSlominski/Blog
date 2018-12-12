@@ -1,0 +1,18 @@
+{#{% extends "base_generic.html" %}#}
+
+{% block content %}
+
+  <h1>Title: {{ post.title }}</h1>
+
+  <p><strong>Author:</strong> <a href="">{{ post.author }}</a></p> <!-- author detail link not yet defined -->
+  <p><strong>Body:</strong> {{ post.body }}</p>
+  <p><strong>Publish:</strong> {{ post.publish }}</p>
+  <p><strong>Created:</strong> {{ post.created }}</p>
+
+    <a href="{% url 'blog:post_update' slug=post.slug %}">Update post</a>
+    <a href="{% url 'blog:post_delete' slug=post.slug %}">Delete post</a>
+    <a href="{% url 'blog:post_list' %}">Return home</a>
+
+{% endblock %}
+
+
