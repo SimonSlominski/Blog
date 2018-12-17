@@ -22,3 +22,11 @@ class PostModelForm(forms.ModelForm):
         instance.save()
 
         return instance
+
+
+class EmailPostForm(forms.Form):
+    name = forms.CharField(max_length=64)
+    email = forms.EmailField()
+    to = forms.EmailField()
+    comment = forms.CharField(required=False, widget=forms.Textarea)
+
