@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 from .forms import PostModelForm
@@ -6,6 +7,7 @@ from .models import Post
 
 class PostListView(ListView):
     model = Post
+    paginate_by = 3
 
 
 class PostDetailView(DetailView):
@@ -42,4 +44,6 @@ class PostDeleteView(DeleteView):
 
     def get_success_url(self):
         return '/blog'
+
+
 
