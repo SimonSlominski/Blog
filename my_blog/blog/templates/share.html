@@ -5,15 +5,17 @@
     {% if sent %}
         <h1>Message has been sent</h1>
         <p>
-            Sending the post: "{{ post.title }}" to {{ cd.to }} was successful.
+            Sending the post: "{{ post.title }}" to: {{ recipient }} was successful.
         </p>
+        <a href="{% url 'blog:post_list' %}">Return home</a>
     {% else %}
 
         <h1>Share "{{ post.title }}" via e-mail</h1>
-        <form action=".." method="post">
+        <form action="." method="post">
             {{ form.as_p }}
             {% csrf_token %}
             <input type="submit" value="Send an email">
         </form>
     {% endif %}
-{% endblock%}
+
+{% endblock %}
