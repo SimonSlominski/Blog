@@ -11,6 +11,7 @@
 
     <a href="{% url 'blog:post_update' slug=post.slug %}">Update post</a>
     <a href="{% url 'blog:post_delete' slug=post.slug %}">Delete post</a>
+    <a href="{% url 'blog:post_share' slug=post.slug %}">Share post</a>
     <a href="{% url 'blog:post_list' %}">Return home</a>
 
 {% endblock %}

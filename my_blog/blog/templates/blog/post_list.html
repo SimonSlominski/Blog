@@ -18,7 +18,8 @@
     </ul>
 
     <a href="{% url 'blog:post_create' %}">Add new post</a>
-
+    <br>
+    <br>
     {% include "pagination.html" with page=page_obj %}
 
 {% endblock %}
