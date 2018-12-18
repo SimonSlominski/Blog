@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from .views import PostListView, PostDetailView, PostCreateView, PostUpdateView, PostDeleteView
+from .views import PostListView, PostDetailView, PostCreateView, PostUpdateView, PostDeleteView, post_share
 
 urlpatterns = [
     url(r'^$', PostListView.as_view(), name='post_list'),
@@ -9,5 +9,7 @@ urlpatterns = [
     url(r'^blog/add/$', PostCreateView.as_view(), name='post_create'),
     url(r'^update/(?P<slug>[-\w]+)/$', PostUpdateView.as_view(), name='post_update'),
     url(r'^delete/(?P<slug>[-\w]+)/$', PostDeleteView.as_view(), name='post_delete'),
+    url(r'^(?P<slug>[-\w]+)/share/$', post_share, name='post_share'),
+
 ]
 
