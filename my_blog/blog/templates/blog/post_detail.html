@@ -2,12 +2,35 @@
 
 {% block content %}
 
-  <h1>Title: {{ post.title }}</h1>
+  <h1>{{ post.title }}</h1>
 
+  <p>{{ post.body|linebreaks }}</p>
   <p><strong>Author:</strong> <a href="">{{ post.author }}</a></p> <!-- author detail link not yet defined -->
-  <p><strong>Body:</strong> {{ post.body }}</p>
   <p><strong>Publish:</strong> {{ post.publish }}</p>
-  <p><strong>Created:</strong> {{ post.created }}</p>
+
+<hr>
+  <h2>Add new comment</h2>
+  <form action="." method="post">
+    {{ form.as_p }}
+    {% csrf_token %}
+    <p><input type="submit" value="Add comment"></p>
+  </form>
+
+<hr>
+    <h3><strong>COMMENTS</strong></h3>
+<hr>
+
+  {% for comment in post.comments.all %}
+    <div class="comment">
+      <p class="info">
+        Comment {{ forloop.counter }} added by <strong>{{ comment.name }}</strong> | {{ comment.created }}
+      </p>
+      {{ comment.body|linebreaks }}<br>
+    </div>
+  {% empty %}
+    <p>There is no comments yet.</p>
+  {% endfor %}
+<hr>
 
     <a href="{% url 'blog:post_update' slug=post.slug %}">Update post</a>
     <a href="{% url 'blog:post_delete' slug=post.slug %}">Delete post</a>
