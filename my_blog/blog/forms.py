@@ -12,15 +12,15 @@ class PostModelForm(forms.ModelForm):
             'title',
             'author',
             'body',
+            'tags'
         ]
 
-    def save(self):
 
+    def save(self):
         # Slug auto-creation based on the title
-        instance = super(PostModelForm, self).save(commit=False)
+        instance = super(PostModelForm, self).save()
         instance.slug = slugify(instance.title)
         instance.save()
-
         return instance
 
 

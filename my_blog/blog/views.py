@@ -6,14 +6,22 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.views.generic.edit import FormMixin
 
 from .forms import PostModelForm, EmailPostForm, CommentForm
+from .mixins import TagMixin
 from .models import Post, Comment
 
 
 
-
-class PostListView(ListView):
+class PostListView(TagMixin, ListView):
     model = Post
     paginate_by = 3
+
+
+class TagListView(TagMixin, ListView):
+    model = Post
+    paginate_by = 3
+
+    def get_queryset(self):
+        return Post.objects.filter(tags__slug=self.kwargs.get('slug'))
 
 
 class PostDetailView(FormMixin, DetailView):
@@ -46,7 +54,7 @@ class PostDetailView(FormMixin, DetailView):
         return super(PostDetailView, self).form_valid(form)
 
 
-class PostCreateView(CreateView):
+class PostCreateView(TagMixin, CreateView):
     model = Post
     form_class = PostModelForm
 
@@ -55,7 +63,7 @@ class PostCreateView(CreateView):
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user
-        return super().form_valid(form)
+        return super(PostCreateView, self).form_valid(form)
 
 
 class PostUpdateView(UpdateView):
