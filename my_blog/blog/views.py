@@ -1,10 +1,14 @@
 from django.core.mail import send_mail
+from django.core.urlresolvers import reverse
 from django.shortcuts import render, get_object_or_404
 
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic.edit import FormMixin
 
-from .forms import PostModelForm, EmailPostForm
-from .models import Post
+from .forms import PostModelForm, EmailPostForm, CommentForm
+from .models import Post, Comment
+
+
 
 
 class PostListView(ListView):
@@ -12,8 +16,34 @@ class PostListView(ListView):
     paginate_by = 3
 
 
-class PostDetailView(DetailView):
+class PostDetailView(FormMixin, DetailView):
     model = Post
+    form_class = CommentForm
+
+    def get_success_url(self):
+        slug = self.kwargs.get('slug')
+        return reverse('blog:post_detail', kwargs={'slug': slug})
+
+    def get_context_data(self, **kwargs):
+        contex = super(PostDetailView, self).get_context_data(**kwargs)
+        contex['form'] = CommentForm(initial={'post': self.object})
+        return contex
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        instance = form.save(commit=False)
+        instance.created_by = self.request.user
+        instance.post = self.object
+        instance.save()
+        return super(PostDetailView, self).form_valid(form)
 
 
 class PostCreateView(CreateView):
