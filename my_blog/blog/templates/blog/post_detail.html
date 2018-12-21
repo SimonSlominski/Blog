@@ -1,4 +1,7 @@
-{#{% extends "base_generic.html" %}#}
+{% extends "blog/base.html" %}
+{% load blog_tags %}
+
+{% block title %}{{ post.title }}{% endblock %}
 
 {% block content %}
 
@@ -16,30 +19,35 @@
   <p><strong>Author:</strong> <a href="">{{ post.author }}</a></p> <!-- author detail link not yet defined -->
   <p><strong>Publish:</strong> {{ post.publish }}</p>
 
-<hr>
-  <h2>Add new comment</h2>
-  <form action="." method="post">
-    {{ form.as_p }}
-    {% csrf_token %}
-    <p><input type="submit" value="Add comment"></p>
-  </form>
 
-<hr>
-    <h3><strong>COMMENTS</strong></h3>
-<hr>
+    <div>
+    <hr>
+        <h3><strong>COMMENTS</strong></h3>
+    <hr>
 
-  {% for comment in post.comments.all %}
-    <div class="comment">
-      <p class="info">
-        Comment {{ forloop.counter }} added by <strong>{{ comment.name }}</strong> | {{ comment.created }}
-      </p>
-      {{ comment.body|linebreaks }}<br>
+      {% for comment in post.comments.all %}
+        <div class="comment">
+          <p class="info">
+            Comment {{ forloop.counter }} added by <strong>{{ comment.name }}</strong> | {{ comment.created }}
+          </p>
+          {{ comment.body|linebreaks }}<br>
+        </div>
+      {% empty %}
+        <p>There is no comments yet.</p>
+      {% endfor %}
     </div>
-  {% empty %}
-    <p>There is no comments yet.</p>
-  {% endfor %}
+
+<hr>
 <hr>
 
+      <h2>Add new comment</h2>
+      <form action="." method="post">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <p><input type="submit" value="Add comment"></p>
+      </form>
+
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
     <a href="{% url 'blog:post_update' slug=post.slug %}">Update post</a>
     <a href="{% url 'blog:post_delete' slug=post.slug %}">Delete post</a>
     <a href="{% url 'blog:post_share' slug=post.slug %}">Share post</a>
