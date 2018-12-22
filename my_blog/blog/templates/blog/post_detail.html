@@ -15,7 +15,7 @@
             {% endfor %}
     </p>
 
-  <p>{{ post.body|linebreaks }}</p>
+  <p>{{ post.body|markdown }}</p>
   <p><strong>Author:</strong> <a href="">{{ post.author }}</a></p> <!-- author detail link not yet defined -->
   <p><strong>Publish:</strong> {{ post.publish }}</p>
 

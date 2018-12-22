@@ -25,6 +25,9 @@
         {% endfor %}
     </ul>
 
+    
+    {{ post.body|markdown|truncatewords_html:30 }}
+
     <a href="{% url 'blog:post_create' %}">Add new post</a>
     <br>
     <br>
