@@ -2,6 +2,7 @@ from django.conf.urls import url
 
 from .views import PostListView, PostDetailView, PostCreateView, PostUpdateView, PostDeleteView, \
     post_share, TagListView
+from .feeds import LatestPostsFeed
 
 urlpatterns = [
     url(r'^$', PostListView.as_view(), name='post_list'),
@@ -12,6 +13,7 @@ urlpatterns = [
     url(r'^update/(?P<slug>[-\w]+)/$', PostUpdateView.as_view(), name='post_update'),
     url(r'^delete/(?P<slug>[-\w]+)/$', PostDeleteView.as_view(), name='post_delete'),
     url(r'^(?P<slug>[-\w]+)/share/$', post_share, name='post_share'),
+    url(r'^blog/feed/$', LatestPostsFeed(), name='post_feed')
 
 ]
 

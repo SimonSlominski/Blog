@@ -20,6 +20,7 @@
 
         <h2>Blog by Jesse Lauriston Livermore</h2>
         <p>This is my blog. So far, I have published {% total_posts %} posts.</p>
+        <p><a href="{% url 'blog:post_feed' %}"> Subscribe RSS </a></p>
 
         <h3>Latest posts:</h3>
         {% show_latest_posts 3 %}
